@@ -1,0 +1,11 @@
+userName: ajaygawade_EhNikM
+accessKey: 7gwES4u88MVtz1u9YpPp
+framework: true
+platforms:
+  - os: Windows
+    osVersion: 10
+    browserName: Chrome
+    browserVersion: 120.0
+browserstackLocal: true
+buildName: browserstack-build-1
+projectName: Spring Selenium Automation Project

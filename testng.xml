@@ -1,0 +1,15 @@
+<!-- testng.xml in project root -->
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="BrowserStack Suite" parallel="methods" thread-count="1">
+    <test name="Login Tests">
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="com.example.demo.Pages.LoginTest"></class>
+        </classes>
+    </test>
+    <test name="Search Tests">
+        <classes>
+            <class name="com.example.demo.Pages.SearchTest"></class>
+        </classes>
+    </test>
+</suite>
