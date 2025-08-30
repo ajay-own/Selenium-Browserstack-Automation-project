@@ -1,9 +1,5 @@
-package com.example.demo.Pages;
+package com.example.demo;
 
-import com.example.demo.libraries.DriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.devtools.v136.page.Page;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

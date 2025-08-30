@@ -1,7 +1,5 @@
-package com.example.demo.Pages;
+package com.example.demo;
 
-import com.example.demo.libraries.DriverManager;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 public class SearchTest extends BaseTest {

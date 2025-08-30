@@ -1,4 +1,4 @@
-package com.example.demo.Pages;
+package com.example.demo;
 
 import com.example.demo.libraries.BrowserFactory;
 import com.example.demo.libraries.DriverManager;
@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.*;
