@@ -27,7 +27,12 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>24</java.version>
+
+            <maven.compiler.source>17</maven.compiler.source>
+            <maven.compiler.target>17</maven.compiler.target>
+            <maven.compiler.release>17</maven.compiler.release>
+
+<!--		<java.version>24</java.version>-->
         <selenium.version>4.34.0</selenium.version>
         <testng.version>7.11.0</testng.version>
         <webdrivermanager.version>6.1.0</webdrivermanager.version>
