@@ -4,14 +4,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,34 +27,49 @@ public class BrowserFactory {
     @Value("${browserstack.accessKey}")
     private String accessKey;
 
-    public WebDriver createBrowserInstance(String browser, String runEnv) {
+    public WebDriver createBrowserInstance(String browser, String runEnv, String testMethodName) {
         System.out.println("runEnv:"+runEnv);
         if (runEnv.equalsIgnoreCase("remote")) {
-            return createRemoteDriver(browser);
+            return createRemoteDriver(browser, testMethodName);
         } else {
-            return createLocalDriver(browser);
+            return CreateLocalChromeDriver(browser, testMethodName);
         }
     }
 
-    private  WebDriver createRemoteDriver(String browser) {
+    private  WebDriver createRemoteDriver(String browser, String testMethodName) {
         try {
 //            String username = System.getenv("BROWSERSTACK_USERNAME");
 //            String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 
             String hubUrl = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
+            LocalDateTime now = LocalDateTime.now();
 
+            // Format as yyyy-MM-dd HH:mm:ss
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = now.format(formatter);
             // Common BrowserStack options
             Map<String, Object> bs = new HashMap<>();
             bs.put("os", "Windows");            // or "OS X"
             bs.put("osVersion", "11");          // pick from BrowserStack’s supported list
             bs.put("projectName", "browserstack Demo Project");
-            bs.put("buildName", "CI - #" + System.currentTimeMillis());
-            bs.put("sessionName", "TestNG parallel");
+            bs.put("buildName", "Test - " + testMethodName + " - "+formattedDate);
+            bs.put("sessionName", "TestNG parallel : "+formattedDate);
             bs.put("seleniumVersion", "4.34.0"); // optional but recommended
 
-            ChromeOptions options = new ChromeOptions();
-            options.setBrowserVersion("latest");
-            options.setCapability("bstack:options", bs);
+            if(browser.equalsIgnoreCase("chrome")) {
+                ChromeOptions options = new ChromeOptions();
+                options.setBrowserVersion("latest");
+                options.setCapability("bstack:options", bs);
+                return new RemoteWebDriver(new URL(hubUrl), options);
+            }
+            if(browser.equalsIgnoreCase("firefox")) {
+                FirefoxOptions options = new FirefoxOptions();
+                options.setBrowserVersion("latest");
+                options.setCapability("browserstack:options", bs);
+                return new RemoteWebDriver(new URL(hubUrl), options);
+
+            }
+
  //           driver = new RemoteWebDriver(new URL(hubUrl), options);
 
 //            DesiredCapabilities caps = new DesiredCapabilities();
@@ -63,14 +80,15 @@ public class BrowserFactory {
 //            caps.setCapability("name", "Parallel Test on " + browser); // test name in BrowserStack dashboard
             System.out.println("hubUrl:"+hubUrl);
             System.out.println("creating remote driver");
-            return new RemoteWebDriver(new URL(hubUrl), options);
+            return null;
+
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to create remote driver", e);
         }
     }
 
-    private  WebDriver createLocalDriver(String browser) {
+    private  WebDriver CreateLocalChromeDriver(String browser, String testMethodName) {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             return new ChromeDriver();

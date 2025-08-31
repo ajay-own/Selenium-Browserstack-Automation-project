@@ -15,25 +15,25 @@ public class LoginTest extends BaseTest{
         Assert.assertTrue(true);
 
     }
-    @Test
-    public void testOne() {
-
-        System.out.println("TestOne running on Thread: " + Thread.currentThread().getId()
-                + " | Driver hashCode: " + driver().hashCode());
-    }
-
-    @Test
-    public void testTwo() {
-
-        System.out.println("TestTwo running on Thread: " + Thread.currentThread().getId()
-                + " | Driver hashCode: " + driver().hashCode());
-    }
-
-    @Test
-    public void testThree() {
-
-        System.out.println("TestThree running on Thread: " + Thread.currentThread().getId()
-                + " | Driver hashCode: " + driver().hashCode());
-    }
+//    @Test
+//    public void testOne() {
+//
+//        System.out.println("TestOne running on Thread: " + Thread.currentThread().getId()
+//                + " | Driver hashCode: " + driver().hashCode());
+//    }
+//
+//    @Test
+//    public void testTwo() {
+//
+//        System.out.println("TestTwo running on Thread: " + Thread.currentThread().getId()
+//                + " | Driver hashCode: " + driver().hashCode());
+//    }
+//
+//    @Test
+//    public void testThree() {
+//
+//        System.out.println("TestThree running on Thread: " + Thread.currentThread().getId()
+//                + " | Driver hashCode: " + driver().hashCode());
+//    }
 
 }

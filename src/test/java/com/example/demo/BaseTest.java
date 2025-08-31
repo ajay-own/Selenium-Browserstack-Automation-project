@@ -11,6 +11,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.*;
 
+import java.lang.reflect.Method;
+
 @SpringBootTest
 @ComponentScan(basePackages = "com.example.demo")   // <-- ensure BrowserFactory is found
 @TestPropertySource(locations = "classpath:application-qa.properties")
@@ -19,10 +21,10 @@ public class BaseTest extends AbstractTestNGSpringContextTests { // this helps i
     @Autowired
     BrowserFactory browserFactory;
 
-    @Value("${application.runEnv}")
-    private String runEnv;
+    @Value("${application.runLoc}")
+    private String runLoc;
 
-    @Value("${appliaction.browser}")
+    @Value("${application.browser}")
     private String browser;
 
     private String JenkinBrowserParameter = System.getProperty("BROWSER");
@@ -30,20 +32,23 @@ public class BaseTest extends AbstractTestNGSpringContextTests { // this helps i
     private String JenkinLocationParameter = System.getProperty("loc");
 
 
-    @BeforeMethod(alwaysRun = true)
-    @Parameters({"browser", "runEnv"})
-    public void setUp(@Optional("chrome") String browser, @Optional("local") String runEnv) {
 
+    @BeforeMethod(alwaysRun = true)
+//    @Parameters({"browser", "runLoc"})
+    public void setUp(Method testMethod) throws Exception {
+
+        System.out.println("jenkin browser before: " + JenkinBrowserParameter);
+        System.out.println("jenkin location: before " + JenkinLocationParameter);
         if(JenkinBrowserParameter == null || JenkinBrowserParameter.isEmpty()){
             JenkinBrowserParameter = browser;
         }
         if(JenkinLocationParameter == null || JenkinLocationParameter.isEmpty()){
-            JenkinLocationParameter = runEnv;
+            JenkinLocationParameter = runLoc;
         }
         System.out.println("jenkin browser: " + JenkinBrowserParameter);
         System.out.println("jenkin location: " + JenkinLocationParameter);
         System.out.println("inside basetest : setUp");
-        WebDriver driver = browserFactory.createBrowserInstance(JenkinBrowserParameter, JenkinLocationParameter);
+        WebDriver driver = browserFactory.createBrowserInstance(JenkinBrowserParameter, JenkinLocationParameter, testMethod.getName());
         DriverManager.setDriverThread(driver);
     }
 
