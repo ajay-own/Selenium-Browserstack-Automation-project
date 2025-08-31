@@ -3,6 +3,7 @@
 <suite name="BrowserStack Suite" parallel="methods" thread-count="3">
     <test name="Login Tests">
         <parameter name="browser" value="chrome"></parameter>
+        <parameter name="runEnv" value="local"></parameter>
         <classes>
             <class name="com.example.demo.LoginTest"/>
         </classes>

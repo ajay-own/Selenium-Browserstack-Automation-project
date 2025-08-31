@@ -4,6 +4,7 @@ import com.example.demo.libraries.BrowserFactory;
 import com.example.demo.libraries.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
@@ -18,11 +19,31 @@ public class BaseTest extends AbstractTestNGSpringContextTests { // this helps i
     @Autowired
     BrowserFactory browserFactory;
 
-    @Parameters("browser")
+    @Value("${application.runEnv}")
+    private String runEnv;
+
+    @Value("${appliaction.browser}")
+    private String browser;
+
+    private String JenkinBrowserParameter = System.getProperty("BROWSER");
+
+    private String JenkinLocationParameter = System.getProperty("LOCATION");
+
+
     @BeforeMethod(alwaysRun = true)
-    public void setUp(@Optional("chrome") String browser) {
+    @Parameters({"browser", "runEnv"})
+    public void setUp(@Optional("chrome") String browser, @Optional("local") String runEnv) {
+
+        if(JenkinBrowserParameter == null || JenkinBrowserParameter.isEmpty()){
+            JenkinBrowserParameter = browser;
+        }
+        if(JenkinLocationParameter == null || JenkinLocationParameter.isEmpty()){
+            JenkinLocationParameter = runEnv;
+        }
+        System.out.println("jenkin browser: " + JenkinBrowserParameter);
+        System.out.println("jenkin location: " + JenkinLocationParameter);
         System.out.println("inside basetest : setUp");
-        WebDriver driver = browserFactory.createBrowserInstance(browser);
+        WebDriver driver = browserFactory.createBrowserInstance(JenkinBrowserParameter, JenkinLocationParameter);
         DriverManager.setDriverThread(driver);
     }
 

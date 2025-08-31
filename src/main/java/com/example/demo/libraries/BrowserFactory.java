@@ -18,14 +18,14 @@ import java.util.Map;
 @Component
 public class BrowserFactory {
 
-    @Value("${application.runEnv}")
-    private String runEnv;
+//    @Value("${application.runEnv}")
+//    private String runEnv;
     @Value("${browserstack.userName}")
     private String username;
     @Value("${browserstack.accessKey}")
     private String accessKey;
 
-    public WebDriver createBrowserInstance(String browser) {
+    public WebDriver createBrowserInstance(String browser, String runEnv) {
         System.out.println("runEnv:"+runEnv);
         if (runEnv.equalsIgnoreCase("remote")) {
             return createRemoteDriver(browser);
