@@ -27,7 +27,7 @@ public class BaseTest extends AbstractTestNGSpringContextTests { // this helps i
 
     private String JenkinBrowserParameter = System.getProperty("BROWSER");
 
-    private String JenkinLocationParameter = System.getProperty("LOCATION");
+    private String JenkinLocationParameter = System.getProperty("loc");
 
 
     @BeforeMethod(alwaysRun = true)
