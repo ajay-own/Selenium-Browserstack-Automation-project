@@ -27,7 +27,7 @@ public class BaseTest extends AbstractTestNGSpringContextTests { // this helps i
     @Value("${application.browser}")
     private String browser;
 
-    private String JenkinBrowserParameter = System.getProperty("BROWSER");
+    private String JenkinBrowserParameter = System.getProperty("browser"); // string name same as jenkins parameters
 
     private String JenkinLocationParameter = System.getProperty("loc");
 
