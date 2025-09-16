@@ -5,6 +5,7 @@ pipeline{
         stage('stage 1'){
             steps{
                 echo 'step 1.1'
+                call mvnw.cmd clean test -Dbrowser=%BROWSER% -Denv=%ENV% -Dloc=%LOCATION%
             }
         }
         stage('stage 2'){
