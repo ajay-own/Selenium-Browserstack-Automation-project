@@ -1,0 +1,37 @@
+pipeline{
+    agent any
+    
+    stages{
+        stage('stage 1'){
+            steps{
+                echo 'step 1.1'
+            }
+        }
+        stage('stage 2'){
+            steps{
+               echo 'step 2.1'
+              //error 'This is error tag message'
+              emailext(
+        to: 'ajaygawade1111@gmail.com',
+        subject: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} FAILED",
+        body: "See console: ${env.BUILD_URL}"
+      )
+                }
+           
+             
+    }
+        }
+         post {
+        success {
+            echo "Runs only after success : Build stage passed 🎉"
+        }
+        failure {
+            echo "runs only after failure : Build stage failed ❌"
+        }
+        always {
+            echo "This runs always :  Build stage finished"
+            emailext body: ' mail from jenkin pipeline', subject: 'Jenkins demo', to: 'ajaygawade1111@gmail.com'
+        }
+                 
+            }
+}
