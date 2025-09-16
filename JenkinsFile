@@ -31,6 +31,7 @@ pipeline{
         }
         always {
             echo "This runs always :  Build stage finished"
+        archiveArtifacts artifacts: '**/target/surefire-reports/*.xml', allowEmptyArchive: true
             emailext body: ' mail from jenkin pipeline', subject: 'Jenkins demo', to: 'ajaygawade1111@gmail.com'
         }
                  
